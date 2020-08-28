@@ -1,40 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width,initial-scale=1.0">
-		<title>Recipe Fetcher</title>
-		<link rel="stylesheet" href="/base.ee376513.css">
-		<style>.search {
-				display: grid;
-				grid-template-columns: 1fr;
-			}
 
-			button[disabled] {
-				opacity: 0.2;
-			}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Recipe Fetcher</title>
+    <link rel="stylesheet" href="/base.ee376513.css">
+    <style>.search {
+            display: grid;
+            grid-template-columns: 1fr;
+        }
+        
+        button[disabled] {
+            opacity: 0.2;
+        }
+        
+        .recipes {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-gap: 20px;
+        }
+        
+        .ingredient,
+        .recipe {
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }</style>
+<script src="/base.ee376513.js"></script></head>
 
-			.recipes {
-				display: grid;
-				grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-				grid-gap: 20px;
-			}
+<body>
+    <div class="wrapper">
+        <form class="search" autocomplete="off">
+            <input type="text" name="query" value="pizza">
+            <label for="ginger">ginger</label>
+            <input type="checkbox" class="ingredient" name="ginger" id="ginger">
+            <label for="salt">salt</label>
+            <input type="checkbox" class="ingredient" name="salt" id="salt">
+            <label for="oil">oil</label>
+            <input type="checkbox" class="ingredient" name="oil" id="oil">
+            <label for="vinegar">vinegar</label>
+            <input type="checkbox" class="ingredient" name="vinegar" id="vinegar">
+            <label for="ice-cream">ice-cream</label>
+            <input type="checkbox" class="ingredient" name="cream" id="cream">
+            <label for="corn">corn</label>
+            <input type="checkbox" class="ingredient" name="corn" id="corn">
+            <label for="chips">chips</label>
+            <input type="checkbox" class="ingredient" name="chips" id="chips">
+            <label for="candy">candy</label>
+            <input type="checkbox" class="ingredient" name="vinegar" id="vinegar">
+            <button name="submit" type="submit">Submit</button>
+        </form>
+        <div class="recipes"></div>
+    </div>
 
-			.recipe {
-				border: 1px solid rgba(0, 0, 0, 0.1);
-				padding: 20px;
-			}</style>
-	<script src="/base.ee376513.js"></script></head>
+    <script src="/scripts.b71a6038.js"></script>
+</body>
 
-	<body>
-		<div class="wrapper">
-			<form class="search" autocomplete="off">
-				<input type="text" name="query" value="pizza">
-				<button name="submit" type="submit">Submit</button>
-			</form>
-			<div class="recipes"></div>
-		</div>
-
-		<script src="/scripts.b71a6038.js"></script>
-	</body>
 </html>

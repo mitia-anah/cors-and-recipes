@@ -119,13 +119,62 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   return newRequire;
 })({"scripts.js":[function(require,module,exports) {
 const baseEndpoint = "http://www.recipepuppy.com/api";
+const proxy = 'https://cors-anywhere.herokuapp.com/';
+const form = document.querySelector('form.search');
+const recipesEl = document.querySelector('.recipes');
+const ingredientEl = document.querySelectorAll('[type="checkbox"]');
 
-async function fetchRecipes(query) {
-  const res = fetch(`${baseEndpoint}?q=${query}`);
-  console.log(res);
+async function fetchRecipes(query, ing) {
+  // ingredient will be an array ['salt', 'oil',.....]
+  const ingString = ing.join(',');
+  const res = await fetch(`${proxy}${baseEndpoint}?q=${query}&i=${ingString}`);
+  const data = await res.json();
+  console.log(data);
+  return data;
 }
 
-fetchRecipes('pizza');
+async function handleSubmit(event) {
+  event.preventDefault();
+  const el = event.currentTarget;
+  fetchAndDisplay(el.query.value);
+}
+
+async function fetchAndDisplay(query) {
+  // turn the form off
+  form.submit.disabled = true; //handle checkbox here
+
+  let ing = [];
+  ingredientEl.forEach(checkbox => {
+    if (checkbox.checked) {
+      ing.push(checkbox.name);
+    }
+  }); // submit the search
+
+  const recipes = await fetchRecipes(query, ing); // turn the form off
+
+  form.submit.disabled = false;
+  console.log(recipes);
+  displayRecipes(recipes.results);
+}
+
+function displayRecipes(recipes) {
+  console.log('creating html');
+  const html = recipes.map(recipe => {
+    return `
+            <div>
+                <h2>${recipe.title}</h2>
+                <p>${recipe.ingredients}</p>
+                ${recipe.thumbnail && `<img src="${recipe.thumbnail}"
+                    alt="${recipe.title}"/>`}
+                <a href="${recipe.href}">View Recipe -></a>
+            </div>
+        `;
+  });
+  recipesEl.innerHTML = html.join('');
+}
+
+form.addEventListener('submit', handleSubmit);
+fetchAndDisplay('pizza');
 },{}],"../../AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -154,7 +203,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51825" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54689" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
